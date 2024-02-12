@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FooRidgeApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FooRidgeApplication.class, args);
+		SpringApplication.run(FooRidgeApplication.class,  args);
 	}
 
 }
