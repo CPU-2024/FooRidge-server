@@ -18,3 +18,9 @@ CREATE TABLE posts (
     content VARCHAR(255) NOT NULL
 );
 
+DROP TABLE IF EXISTS postImages;
+CREATE TABLE postImages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    post_id INT NOT NULL,
+    postImage VARCHAR(500) NOT NULL
+);
