@@ -7,3 +7,14 @@ CREATE TABLE users (
     address VARCHAR(255) NOT NULL,
     profile_img VARCHAR(255) NOT NULL
 );
+
+DROP TABLE IF EXISTS posts;
+CREATE TABLE posts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    category_id INT NOT NULL,
+    tradeMethod VARCHAR(20) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    content VARCHAR(255) NOT NULL
+);
+
