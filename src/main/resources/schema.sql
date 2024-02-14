@@ -19,7 +19,7 @@ CREATE TABLE posts (
 );
 
 DROP TABLE IF EXISTS postImages;
-CREATE TABLE postImages (
+CREATE TABLE post_images (
     id INT AUTO_INCREMENT PRIMARY KEY,
     post_id INT NOT NULL,
     postImage VARCHAR(500) NOT NULL
