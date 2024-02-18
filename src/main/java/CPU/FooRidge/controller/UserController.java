@@ -33,4 +33,12 @@ public class UserController {
         User createUser = userService.addUser(user);
         return new ResponseEntity<>(createUser, HttpStatus.CREATED);
     }
+
+    //로그인
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestBody User user){
+        User loggedUser=userService.login(user);
+        if(loggedUser!=null) return new ResponseEntity<>(loggedUser,HttpStatus.OK);
+        else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

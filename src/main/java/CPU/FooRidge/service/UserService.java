@@ -26,4 +26,13 @@ public class UserService {
     public User addUser(User user){
         return userRepository.save(user);
     }
+
+    public User login(User user) {
+        User loggedUser = userRepository.findByUserEmail(user.getUserEmail());
+        if (loggedUser != null && loggedUser.getUserPassword().equals(user.getUserPassword())) {
+            return loggedUser;
+        } else {
+            return null;
+        }
+    }
 }
