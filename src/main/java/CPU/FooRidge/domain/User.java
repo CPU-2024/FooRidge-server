@@ -1,37 +1,85 @@
 package CPU.FooRidge.domain;
 
-
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="users")
 public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
     private int userId;
 
-    @Column(name="name",nullable = false,length=20)
+    @Column(nullable = false)
     private String userName;
 
-    @Column(name="email",nullable = false)
+    @Column(nullable = false)
     private String userEmail;
 
-    @Column(name="password",nullable = false)
+    @Column(nullable = false)
     private String userPassword;
 
-    @Column(name="address",nullable = false)
+    @Column(nullable = false)
     private String userAddress;
 
-    @Column(name="profile_img",nullable = false)
+    @Column(nullable = false)
     private String userProfileImage;
 
-    public User(int userId,String userName,String userEmail,String userPassword,String userAddress,String userProfileImage){
-        this.userId=userId;
-        this.userName=userName;
-        this.userEmail=userEmail;
-        this.userPassword=userPassword;
-        this.userAddress=userAddress;
-        this.userProfileImage=userProfileImage;
+    public User() {
+    }
+
+    public User(String userName, String userEmail, String userPassword, String userAddress, String userProfileImage) {
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+        this.userAddress = userAddress;
+        this.userProfileImage = userProfileImage;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    public String getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
+    }
+
+    public String getUserProfileImage() {
+        return userProfileImage;
+    }
+
+    public void setUserProfileImage(String userProfileImage) {
+        this.userProfileImage = userProfileImage;
     }
 }

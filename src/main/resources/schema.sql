@@ -1,26 +1,26 @@
-DROP TABLE IF EXISTS users;
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(20) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    address VARCHAR(255) NOT NULL,
-    profile_img VARCHAR(255) NOT NULL
-);
-
-DROP TABLE IF EXISTS posts;
-CREATE TABLE posts (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    category_id INT NOT NULL,
-    tradeMethod VARCHAR(20) NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    content VARCHAR(255) NOT NULL
-);
-
-DROP TABLE IF EXISTS postImages;
-CREATE TABLE post_images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    post_id INT NOT NULL,
-    postImage VARCHAR(500) NOT NULL
-);
+--DROP TABLE IF EXISTS users;
+--CREATE TABLE users (
+--    id INT AUTO_INCREMENT PRIMARY KEY,
+--    name VARCHAR(20) NOT NULL,
+--    email VARCHAR(255) NOT NULL,
+--    password VARCHAR(255) NOT NULL,
+--    address VARCHAR(255) NOT NULL,
+--    profile_img VARCHAR(255) NOT NULL
+--);
+--
+--DROP TABLE IF EXISTS posts;
+--CREATE TABLE posts (
+--    id INT AUTO_INCREMENT PRIMARY KEY,
+--    user_id INT NOT NULL,
+--    category_id INT NOT NULL,
+--    tradeMethod VARCHAR(20) NOT NULL,
+--    title VARCHAR(255) NOT NULL,
+--    content VARCHAR(255) NOT NULL
+--);
+--
+--DROP TABLE IF EXISTS post_images;
+--CREATE TABLE post_images (
+--    id INT AUTO_INCREMENT PRIMARY KEY,
+--    post_id INT NOT NULL,
+--    postImage VARCHAR(500) NOT NULL
+--);
