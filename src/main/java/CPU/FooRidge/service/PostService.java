@@ -5,6 +5,7 @@ import CPU.FooRidge.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -21,5 +22,23 @@ public class PostService {
 
     public List<Post> getAllPost(){
         return postRepository.findAll();
+    }
+
+    public void deletePost(Long postId){
+       postRepository.deleteById(postId);
+    }
+
+    public Post updatePost(Long postId,Post updatedPost){
+        Optional<Post> postOptional=postRepository.findById(postId);
+        if(postOptional.isPresent()){
+            Post post=postOptional.get();
+            post.setUserId(updatedPost.getUserId());
+            post.setCategoryId(updatedPost.getCategoryId());
+            post.setTradeMethod(updatedPost.getTradeMethod());
+            post.setPostTitle(updatedPost.getPostTitle());
+            post.setPostContent(updatedPost.getPostContent());
+            return postRepository.save(post);
+        }
+        return null;
     }
 }

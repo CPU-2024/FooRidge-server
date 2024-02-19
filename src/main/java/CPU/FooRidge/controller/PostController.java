@@ -27,4 +27,16 @@ public class PostController {
         return new ResponseEntity<>(createPost, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<Void> deletePost(@PathVariable("postId") Long postId){
+        postService.deletePost(postId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/{postId}")
+    public ResponseEntity<Post> updatePost(@PathVariable("postId") Long postId,@RequestBody Post updatedpost){
+        postService.updatePost(postId,updatedpost);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
