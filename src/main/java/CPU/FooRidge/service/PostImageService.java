@@ -19,7 +19,7 @@ public class PostImageService {
         return postImageRepository.findAll();
     }
 
-    public postImage addPostImage(postImage postImage){
+    public postImage addImage(postImage postImage){
         return postImageRepository.save(postImage);
     }
 }

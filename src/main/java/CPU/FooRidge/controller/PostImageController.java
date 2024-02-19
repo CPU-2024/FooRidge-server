@@ -23,7 +23,7 @@ public class PostImageController {
 
     @PostMapping
     public ResponseEntity<postImage> addPostImage(@RequestBody postImage postImage){
-        postImage createImage=postImageService.addPostImage(postImage);
+        postImage createImage=postImageService.addImage(postImage);
         return new ResponseEntity<>(createImage, HttpStatus.CREATED);
     }
 }
