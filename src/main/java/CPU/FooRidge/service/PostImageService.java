@@ -22,4 +22,8 @@ public class PostImageService {
     public postImage addImage(postImage postImage){
         return postImageRepository.save(postImage);
     }
+
+    public void deleteImage(Long postId){
+        postImageRepository.deleteById(postId);
+    }
 }

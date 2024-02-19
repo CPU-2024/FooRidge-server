@@ -26,4 +26,10 @@ public class PostImageController {
         postImage createImage=postImageService.addImage(postImage);
         return new ResponseEntity<>(createImage, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<Void> deleteImage(@PathVariable("postId") Long postId){
+        postImageService.deleteImage(postId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
