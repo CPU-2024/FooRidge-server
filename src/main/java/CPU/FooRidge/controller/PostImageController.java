@@ -3,9 +3,9 @@ package CPU.FooRidge.controller;
 import CPU.FooRidge.domain.postImage;
 import CPU.FooRidge.service.PostImageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,5 +19,11 @@ public class PostImageController {
     @GetMapping
     public List<postImage> getAllImages() {
         return postImageService.findAllImages();
+    }
+
+    @PostMapping
+    public ResponseEntity<postImage> addPostImage(@RequestBody postImage postImage){
+        postImage createImage=postImageService.addPostImage(postImage);
+        return new ResponseEntity<>(createImage, HttpStatus.CREATED);
     }
 }
