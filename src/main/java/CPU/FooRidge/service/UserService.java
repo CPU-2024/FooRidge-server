@@ -35,4 +35,9 @@ public class UserService {
             return null;
         }
     }
+
+    //유저 삭제
+    public void deleteUser(Long userId){
+         userRepository.deleteById(userId);
+    }
 }
