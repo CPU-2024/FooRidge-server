@@ -10,10 +10,10 @@ public class Post {
     @Column(name="id")
     private int postId;
 
-    @Column(nullable = false)
+    @Column(name = "user_id",nullable = false)
     private int userId;
 
-    @Column(nullable = false)
+    @Column(name = "category_id", nullable = false)
     private int categoryId;
 
     @Column(nullable = false)

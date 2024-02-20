@@ -1,6 +1,7 @@
 package CPU.FooRidge.service;
 
 import CPU.FooRidge.domain.Post;
+import CPU.FooRidge.domain.User;
 import CPU.FooRidge.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,10 @@ public class PostService {
 
     public List<Post> getAllPost(){
         return postRepository.findAll();
+    }
+
+    public List<Post> getPostsByUserId(Long userId){
+        return postRepository.findByUserId(userId);
     }
 
     public void deletePost(Long postId){
