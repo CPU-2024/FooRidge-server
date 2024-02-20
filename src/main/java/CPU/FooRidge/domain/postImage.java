@@ -10,7 +10,7 @@ public class postImage{
     @Column(name="id")
     private int postImageId;
 
-    @Column(nullable = false)
+    @JoinColumn(name = "post", referencedColumnName = "id",nullable = false)
     private int postId;
 
     @Column(nullable = false)
