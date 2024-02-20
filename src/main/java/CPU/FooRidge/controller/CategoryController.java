@@ -26,4 +26,10 @@ public class CategoryController {
         Category createCategory=categoryService.addCategory(category);
         return new ResponseEntity<>(createCategory, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{categoryId}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable("categoryId") Long categoryId){
+        categoryService.deleteCategory(categoryId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
