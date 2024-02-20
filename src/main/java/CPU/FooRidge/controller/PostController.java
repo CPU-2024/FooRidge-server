@@ -1,6 +1,7 @@
 package CPU.FooRidge.controller;
 
 import CPU.FooRidge.domain.Post;
+import CPU.FooRidge.domain.User;
 import CPU.FooRidge.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,11 @@ public class PostController {
     @GetMapping
     public List<Post> getAllPost() {
         return postService.getAllPost();
+    }
+
+    @GetMapping("/user/{userId}")
+    public List<Post> getPostsByUserId(@PathVariable("userId") Long userId){
+        return postService.getPostsByUserId(userId);
     }
 
     @PostMapping
