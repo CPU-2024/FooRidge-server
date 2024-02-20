@@ -10,11 +10,11 @@ public class Post {
     @Column(name="id")
     private int postId;
 
-    @JoinColumn(name = "user", referencedColumnName = "id",nullable = false)
-    private User userId;
+    @Column(name = "user_id",nullable = false)
+    private int userId;
 
-    @JoinColumn(name = "category", referencedColumnName = "id",nullable = false)
-    private Category categoryId;
+    @Column(name = "category_id", nullable = false)
+    private int categoryId;
 
     @Column(nullable = false)
     private String tradeMethod;
@@ -28,7 +28,7 @@ public class Post {
     public Post(){
 
     }
-    public Post(User userId,Category categoryId,String tradeMethod,String postTitle,String postContent){
+    public Post(int userId,int categoryId,String tradeMethod,String postTitle,String postContent){
         this.userId=userId;
         this.categoryId=categoryId;
         this.tradeMethod=tradeMethod;
@@ -44,19 +44,19 @@ public class Post {
         this.postId = postId;
     }
 
-    public User getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public Category getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Category categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 
