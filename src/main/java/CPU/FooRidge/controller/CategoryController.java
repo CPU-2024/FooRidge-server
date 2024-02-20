@@ -1,11 +1,12 @@
 package CPU.FooRidge.controller;
 
 import CPU.FooRidge.domain.Category;
+import CPU.FooRidge.domain.User;
 import CPU.FooRidge.service.CategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,5 +19,11 @@ public class CategoryController {
     @GetMapping
     public List<Category> getAllCategory(){
         return categoryService.getAllCategory();
+    }
+
+    @PostMapping
+    public ResponseEntity<Category> addCategory(@RequestBody Category category){
+        Category createCategory=categoryService.addCategory(category);
+        return new ResponseEntity<>(createCategory, HttpStatus.CREATED);
     }
 }
