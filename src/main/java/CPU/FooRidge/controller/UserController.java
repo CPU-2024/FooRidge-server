@@ -41,4 +41,17 @@ public class UserController {
         if(loggedUser!=null) return new ResponseEntity<>(loggedUser,HttpStatus.OK);
         else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    //유저삭제
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("userId") Long userId){
+        userService.deleteUser(userId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    //유저 업데이트
+    @PutMapping("/{userId}")
+    public ResponseEntity<User> updateUser(@PathVariable("userId") Long userId,@RequestBody User updateUser){
+        userService.updateUser(userId,updateUser);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

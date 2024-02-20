@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -35,4 +36,22 @@ public class UserService {
             return null;
         }
     }
+
+    //유저 삭제
+    public void deleteUser(Long userId){
+         userRepository.deleteById(userId);
+    }
+
+    public User updateUser(Long userId,User updatedUser){
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setUserName(updatedUser.getUserName());
+            user.setUserPassword(updatedUser.getUserPassword());
+            user.setUserAddress(updatedUser.getUserAddress());
+            return userRepository.save(user);
+        }
+        return null;
+    }
+
 }
