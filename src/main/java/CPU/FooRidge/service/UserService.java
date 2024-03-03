@@ -48,8 +48,19 @@ public class UserService {
             User user = userOptional.get();
             user.setUserName(updatedUser.getUserName());
             user.setUserPassword(updatedUser.getUserPassword());
-            user.setUserAddress(updatedUser.getUserAddress());
             return userRepository.save(user);
+        }
+        return null;
+    }
+
+    public User updateAddress(Long userId,User updatedAddress){
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User existingUser = optionalUser.get();
+            if (updatedAddress.getUserAddress() != null) {
+                existingUser.setUserAddress(updatedAddress.getUserAddress());
+            }
+            userRepository.save(existingUser);
         }
         return null;
     }
