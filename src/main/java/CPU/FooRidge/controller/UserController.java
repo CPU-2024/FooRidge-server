@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
+@CrossOrigin(originPatterns = "http://localhost:3000")
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -54,4 +56,13 @@ public class UserController {
         userService.updateUser(userId,updateUser);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    //주소 업데이트
+    @PutMapping("/{userId}/location")
+    public ResponseEntity<User> updateAddress(@PathVariable("userId") Long userId,@RequestBody User updateAddress){
+        userService.updateAddress(userId,updateAddress);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }
