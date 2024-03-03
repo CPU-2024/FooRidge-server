@@ -18,21 +18,17 @@ public class User {
     @Column(nullable = false)
     private String userPassword;
 
-    @Column(nullable = false)
+    @Column
     private String userAddress;
-
-    @Column(nullable = false)
-    private String userProfileImage;
 
     public User() {
     }
 
-    public User(String userName, String userEmail, String userPassword, String userAddress, String userProfileImage) {
+    public User(String userName, String userEmail, String userPassword, String userAddress) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.userAddress = userAddress;
-        this.userProfileImage = userProfileImage;
     }
 
     public int getUserId() {
@@ -73,13 +69,5 @@ public class User {
 
     public void setUserAddress(String userAddress) {
         this.userAddress = userAddress;
-    }
-
-    public String getUserProfileImage() {
-        return userProfileImage;
-    }
-
-    public void setUserProfileImage(String userProfileImage) {
-        this.userProfileImage = userProfileImage;
     }
 }
