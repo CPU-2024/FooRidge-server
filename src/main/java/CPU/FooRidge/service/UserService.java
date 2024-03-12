@@ -53,14 +53,12 @@ public class UserService {
         return null;
     }
 
-    public User updateAddress(Long userId,User updatedAddress){
-        Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isPresent()) {
-            User existingUser = optionalUser.get();
-            if (updatedAddress.getUserAddress() != null) {
-                existingUser.setUserAddress(updatedAddress.getUserAddress());
-            }
-            userRepository.save(existingUser);
+    public User updateUserAddress(Long userId, String newAddress) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setUserAddress(newAddress);
+            return userRepository.save(user);
         }
         return null;
     }
