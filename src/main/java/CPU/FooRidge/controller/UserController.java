@@ -58,10 +58,10 @@ public class UserController {
     }
 
     //주소 업데이트
-    @PutMapping("/{userId}/location")
-    public ResponseEntity<User> updateAddress(@PathVariable("userId") Long userId,@RequestBody User updateAddress){
-        userService.updateAddress(userId,updateAddress);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PatchMapping("/{userId}/location")
+    public ResponseEntity<User> updatedUserAddress(@PathVariable("userId") Long userId, @RequestBody String newAddress){
+        User updateUser = userService.updateUserAddress(userId, newAddress);
+        return ResponseEntity.ok(updateUser);
     }
 
 
