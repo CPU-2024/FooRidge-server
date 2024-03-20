@@ -3,6 +3,8 @@ package CPU.FooRidge.controller;
 import CPU.FooRidge.domain.User;
 import CPU.FooRidge.repository.UserRepository;
 import CPU.FooRidge.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,9 +40,14 @@ public class UserController {
 
     //로그인
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody User user){
+    public ResponseEntity<User> login(@RequestBody User user, HttpServletRequest request){
         User loggedUser=userService.login(user);
-        if(loggedUser!=null) return new ResponseEntity<>(loggedUser,HttpStatus.OK);
+        if(loggedUser!=null) {
+            HttpSession session=request.getSession();
+            session.setAttribute("loginUser",user);
+            session.setMaxInactiveInterval(60*30);
+            return new ResponseEntity<>(loggedUser,HttpStatus.OK);
+        }
         else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 

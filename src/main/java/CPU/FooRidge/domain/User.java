@@ -9,7 +9,7 @@ public class User {
     @Column(name="id")
     private int userId;
 
-    @Column(nullable = false)
+    @Column
     private String userName;
 
     @Column(nullable = false)
