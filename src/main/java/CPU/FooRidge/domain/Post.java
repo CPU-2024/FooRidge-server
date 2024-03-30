@@ -2,12 +2,14 @@ package CPU.FooRidge.domain;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="posts")
 public class Post {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name="Id")
     private int postId;
 
     @Column(name = "user_id",nullable = false)
@@ -17,10 +19,19 @@ public class Post {
     private int categoryId;
 
     @Column(nullable = false)
-    private String tradeMethod;
+    private String postTitle;
 
     @Column(nullable = false)
-    private String postTitle;
+    private String tradeMethod;
+
+    @Column
+    private int price;
+
+    @Column
+    private String fileName;
+
+    @Column
+    private String filePath;
 
     @Column(nullable = false)
     private String postContent;
@@ -28,11 +39,14 @@ public class Post {
     public Post(){
 
     }
-    public Post(int userId,int categoryId,String tradeMethod,String postTitle,String postContent){
+    public Post(int userId,int categoryId,String tradeMethod,String postTitle,int price,String fileName,String filePath,String postContent){
         this.userId=userId;
         this.categoryId=categoryId;
         this.tradeMethod=tradeMethod;
         this.postTitle=postTitle;
+        this.price=price;
+        this.fileName=fileName;
+        this.filePath=filePath;
         this.postContent=postContent;
     }
 
@@ -58,6 +72,31 @@ public class Post {
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+    }
+
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getFilePath() {
+        return filePath;
     }
 
     public String getTradeMethod() {

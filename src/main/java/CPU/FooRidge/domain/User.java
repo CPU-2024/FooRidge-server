@@ -9,7 +9,7 @@ public class User {
     @Column(name="id")
     private int userId;
 
-    @Column(nullable = false)
+    @Column
     private String userName;
 
     @Column(nullable = false)
@@ -21,14 +21,22 @@ public class User {
     @Column
     private String userAddress;
 
+    @Column
+    private String userFileName;
+
+    @Column
+    private String userFilePath;
+
     public User() {
     }
 
-    public User(String userName, String userEmail, String userPassword, String userAddress) {
+    public User(String userName, String userEmail, String userPassword, String userAddress,String userFileName,String userFilePath) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.userAddress = userAddress;
+        this.userFileName=userFileName;
+        this.userFilePath=userFilePath;
     }
 
     public int getUserId() {
@@ -69,5 +77,19 @@ public class User {
 
     public void setUserAddress(String userAddress) {
         this.userAddress = userAddress;
+    }
+
+    public String getUserFileName() { return userFileName; }
+
+    public void setUserFileName(String userFileName) {
+        this.userFileName = userFileName;
+    }
+
+    public String getUserFilePath() {
+        return userFilePath;
+    }
+
+    public void setUserFilePath(String userFilePath) {
+        this.userFilePath = userFilePath;
     }
 }

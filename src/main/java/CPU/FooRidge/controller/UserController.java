@@ -3,11 +3,14 @@ package CPU.FooRidge.controller;
 import CPU.FooRidge.domain.User;
 import CPU.FooRidge.repository.UserRepository;
 import CPU.FooRidge.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,9 +41,14 @@ public class UserController {
 
     //로그인
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody User user){
+    public ResponseEntity<User> login(@RequestBody User user, HttpServletRequest request){
         User loggedUser=userService.login(user);
-        if(loggedUser!=null) return new ResponseEntity<>(loggedUser,HttpStatus.OK);
+        if(loggedUser!=null) {
+            HttpSession session=request.getSession();
+            session.setAttribute("loginUser",user);
+            session.setMaxInactiveInterval(60*30);
+            return new ResponseEntity<>(loggedUser,HttpStatus.OK);
+        }
         else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
@@ -55,6 +63,19 @@ public class UserController {
     public ResponseEntity<User> updateUser(@PathVariable("userId") Long userId,@RequestBody User updateUser){
         userService.updateUser(userId,updateUser);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //프로필사진 업데이트
+    @PatchMapping("/{userId}/profile")
+    public ResponseEntity<String> uploadProfile(@PathVariable("userId") Long userId,
+                                                @RequestPart("file") MultipartFile file) {
+        try {
+            userService.uploadProFile(userId, file);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     //주소 업데이트

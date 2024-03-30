@@ -7,9 +7,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/post")
 @RequiredArgsConstructor
@@ -28,10 +31,24 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Post> addPost(@RequestBody Post post){
-        Post createPost=postService.addPost(post);
-        return new ResponseEntity<>(createPost, HttpStatus.CREATED);
+    public ResponseEntity<String>  addPost(@RequestParam("postTitle") String postTitle,
+                                           @RequestParam("tradeMethod") String tradeMethod,
+                                           @RequestParam("price") int price,
+                                           @RequestParam("postContent") String postContent,
+                                           @RequestParam("file") MultipartFile file){
+        try{
+            Post post=new Post();
+            post.setPostTitle(postTitle);
+            post.setTradeMethod(tradeMethod);
+            post.setPrice(price);
+            post.setPostContent(postContent);
+            postService.addPost(post,file);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
 
     @DeleteMapping("/{postId}")
     public ResponseEntity<Void> deletePost(@PathVariable("postId") Long postId){
