@@ -27,11 +27,10 @@ public class Post {
     @Column
     private int price;
 
+    @ElementCollection
+    @CollectionTable(name = "post_files", joinColumns = @JoinColumn(name = "post_id"))
     @Column
-    private String fileName;
-
-    @Column
-    private String filePath;
+    private List<String> fileNames;
 
     @Column(nullable = false)
     private String postContent;
@@ -39,14 +38,13 @@ public class Post {
     public Post(){
 
     }
-    public Post(int userId,int categoryId,String tradeMethod,String postTitle,int price,String fileName,String filePath,String postContent){
+    public Post(int userId,int categoryId,String tradeMethod,String postTitle,int price,List<String> fileNames,String postContent){
         this.userId=userId;
         this.categoryId=categoryId;
         this.tradeMethod=tradeMethod;
         this.postTitle=postTitle;
         this.price=price;
-        this.fileName=fileName;
-        this.filePath=filePath;
+        this.fileNames=fileNames;
         this.postContent=postContent;
     }
 
@@ -83,20 +81,12 @@ public class Post {
         return price;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public List<String> getFileNames() {
+        return fileNames;
     }
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    public String getFilePath() {
-        return filePath;
+    public void setFileNames(List<String> fileNames) {
+        this.fileNames = fileNames;
     }
 
     public String getTradeMethod() {

@@ -1,10 +1,8 @@
 package CPU.FooRidge.service;
 
-import CPU.FooRidge.domain.Image;
 import CPU.FooRidge.domain.User;
 import CPU.FooRidge.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,22 +22,26 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public void addPost(Post post, MultipartFile file) throws IOException {
+    public void addPost(Post post, List<MultipartFile> files) throws IOException {
         try {
             String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
 
+            List<String> fileNames=new ArrayList<>();
+
             UUID uuid = UUID.randomUUID();
+            for(MultipartFile file : files){
+                // UUID와 파일이름을 포함된 파일 이름 저장
+                String fileName = uuid + "_" + file.getOriginalFilename();
 
-            // UUID와 파일이름을 포함된 파일 이름 저장
-            String fileName = uuid + "_" + file.getOriginalFilename();
+                // projectPath는  경로, name은 전달받을 이름
+                File saveFile = new File(projectPath, fileName);
 
-            // projectPath는  경로, name은 전달받을 이름
-            File saveFile = new File(projectPath, fileName);
+                file.transferTo(saveFile);
+                fileNames.add(fileName);
 
-            file.transferTo(saveFile);
+            }
 
-            post.setFileName(fileName);
-            post.setFilePath("/files/" + fileName);
+            post.setFileNames(fileNames);
 
             postRepository.save(post);
         } catch (IOException e) {
