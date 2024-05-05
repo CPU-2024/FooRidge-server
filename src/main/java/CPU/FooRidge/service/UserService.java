@@ -2,6 +2,8 @@ package CPU.FooRidge.service;
 
 import CPU.FooRidge.domain.User;
 import CPU.FooRidge.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,9 +59,11 @@ public class UserService {
             }
     }
 
-    public User login(User user) {
+    public User login(User user, HttpServletRequest request) {
         User loggedUser = userRepository.findByUserEmail(user.getUserEmail());
-        if (loggedUser != null && isPasswordValid(user.getUserPassword(),loggedUser.getUserPassword())) {
+        if (loggedUser != null && isPasswordValid(user.getUserPassword(), loggedUser.getUserPassword())) {
+            HttpSession session = request.getSession(true);
+            session.setAttribute("loggedInUser", loggedUser);
             return loggedUser;
         } else {
             return null;

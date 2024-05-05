@@ -41,17 +41,14 @@ public class UserController {
 
     //로그인
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody User user, HttpServletRequest request){
-        User loggedUser=userService.login(user);
-        if(loggedUser!=null) {
-            HttpSession session=request.getSession();
-            session.setAttribute("loginUser",user);
-            session.setMaxInactiveInterval(60*30);
-            return new ResponseEntity<>(loggedUser,HttpStatus.OK);
+    public ResponseEntity<User> login(@RequestBody User user, HttpServletRequest request) {
+        User loggedUser = userService.login(user, request);
+        if (loggedUser != null) {
+            return new ResponseEntity<>(loggedUser, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
     //유저삭제
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable("userId") Long userId){
