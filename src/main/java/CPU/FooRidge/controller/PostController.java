@@ -35,14 +35,14 @@ public class PostController {
                                            @RequestParam("tradeMethod") String tradeMethod,
                                            @RequestParam("price") int price,
                                            @RequestParam("postContent") String postContent,
-                                           @RequestParam("file") MultipartFile file){
+                                           @RequestParam("file") List<MultipartFile> files){
         try{
             Post post=new Post();
             post.setPostTitle(postTitle);
             post.setTradeMethod(tradeMethod);
             post.setPrice(price);
             post.setPostContent(postContent);
-            postService.addPost(post,file);
+            postService.addPost(post,files);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

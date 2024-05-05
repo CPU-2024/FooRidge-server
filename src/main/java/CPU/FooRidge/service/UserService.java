@@ -1,10 +1,10 @@
 package CPU.FooRidge.service;
 
-import CPU.FooRidge.domain.Image;
 import CPU.FooRidge.domain.User;
 import CPU.FooRidge.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -59,15 +59,19 @@ public class UserService {
             }
     }
 
-    public User login(User user) {
+    public User login(User user, HttpServletRequest request) {
         User loggedUser = userRepository.findByUserEmail(user.getUserEmail());
-        if (loggedUser != null && loggedUser.getUserPassword().equals(user.getUserPassword())) {
+        if (loggedUser != null && isPasswordValid(user.getUserPassword(), loggedUser.getUserPassword())) {
+            HttpSession session = request.getSession(true);
+            session.setAttribute("loggedInUser", loggedUser);
             return loggedUser;
         } else {
             return null;
         }
     }
-
+    private boolean isPasswordValid(String inputPassword,String storedPassword){
+        return inputPassword.equals(storedPassword);
+    }
     //유저 삭제
     public void deleteUser(Long userId){
          userRepository.deleteById(userId);
