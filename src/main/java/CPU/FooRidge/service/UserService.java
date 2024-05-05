@@ -59,13 +59,15 @@ public class UserService {
 
     public User login(User user) {
         User loggedUser = userRepository.findByUserEmail(user.getUserEmail());
-        if (loggedUser != null && loggedUser.getUserPassword().equals(user.getUserPassword())) {
+        if (loggedUser != null && isPasswordValid(user.getUserPassword(),loggedUser.getUserPassword())) {
             return loggedUser;
         } else {
             return null;
         }
     }
-
+    private boolean isPasswordValid(String inputPassword,String storedPassword){
+        return inputPassword.equals(storedPassword);
+    }
     //유저 삭제
     public void deleteUser(Long userId){
          userRepository.deleteById(userId);
