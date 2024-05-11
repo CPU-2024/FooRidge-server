@@ -34,8 +34,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody User user){
-        User createUser = userService.addUser(user);
+    public ResponseEntity<User> addUser(@RequestBody User user,HttpServletRequest request){
+        User createUser = userService.addUser(user,request);
         return new ResponseEntity<>(createUser, HttpStatus.CREATED);
     }
 
@@ -76,9 +76,9 @@ public class UserController {
     }
 
     //주소 업데이트
-    @PatchMapping("/{userId}/location")
-    public ResponseEntity<User> updatedUserAddress(@PathVariable("userId") Long userId, @RequestBody String newAddress){
-        User updateUser = userService.updateUserAddress(userId, newAddress);
+    @PatchMapping("/location")
+    public ResponseEntity<User> updatedUserAddress(@RequestBody String newAddress,HttpServletRequest request) {
+        User updateUser = userService.updateUserAddress(newAddress,request);
         return ResponseEntity.ok(updateUser);
     }
 

@@ -6,7 +6,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -29,8 +31,15 @@ public class UserService {
     }
 
     @Transactional
-    public User addUser(User user){
-        return userRepository.save(user);
+    public User addUser(User user,HttpServletRequest requset){
+        User savedUser = userRepository.save(user);
+        if (savedUser != null) {
+            HttpSession session = requset.getSession(true);
+            session.setAttribute("loggedInUser", savedUser);
+            User sessionUser = (User) session.getAttribute("loggedInUser");
+            System.out.println("Logged-in User: " + sessionUser.getUserName());
+        }
+        return savedUser;
     }
 
     public void uploadProFile(Long userId,MultipartFile file)throws Exception{
@@ -88,14 +97,16 @@ public class UserService {
         return null;
     }
 
-    public User updateUserAddress(Long userId, String newAddress) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            user.setUserAddress(newAddress);
-            return userRepository.save(user);
+    public User updateUserAddress(String newAddress, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            User loggedUser = (User) session.getAttribute("loggedInUser");
+            if (loggedUser != null) {
+                loggedUser.setUserAddress(newAddress);
+                System.out.println("Updated location for user: " + loggedUser.getUserName());
+                return userRepository.save(loggedUser);
+            }
         }
         return null;
     }
-
 }
