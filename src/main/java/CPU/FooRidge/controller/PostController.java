@@ -30,6 +30,12 @@ public class PostController {
         return postService.getPostsByUserId(userId);
     }
 
+    @GetMapping("/search")
+    public List<Post> search(@RequestParam("keyword") String keyword){
+        List<Post> searchList=postService.search(keyword);
+        return searchList;
+    }
+
     @PostMapping
     public ResponseEntity<String>  addPost(@RequestParam("postTitle") String postTitle,
                                            @RequestParam("tradeMethod") String tradeMethod,

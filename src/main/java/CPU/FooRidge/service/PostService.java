@@ -76,4 +76,9 @@ public class PostService {
         }
         return null;
     }
+
+    public List<Post> search(String keyword){
+        List<Post> postsList=postRepository.findByPostTitleContaining(keyword);
+        return postsList;
+    }
 }
