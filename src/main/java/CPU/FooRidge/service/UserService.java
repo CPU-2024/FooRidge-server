@@ -31,14 +31,8 @@ public class UserService {
     }
 
     @Transactional
-    public User addUser(User user,HttpServletRequest requset){
+    public User addUser(User user){
         User savedUser = userRepository.save(user);
-        if (savedUser != null) {
-            HttpSession session = requset.getSession(true);
-            session.setAttribute("loggedInUser", savedUser);
-            User sessionUser = (User) session.getAttribute("loggedInUser");
-            System.out.println("Logged-in User: " + sessionUser.getUserName());
-        }
         return savedUser;
     }
 
@@ -68,11 +62,9 @@ public class UserService {
             }
     }
 
-    public User login(User user, HttpServletRequest request) {
+    public User login(User user) {
         User loggedUser = userRepository.findByUserEmail(user.getUserEmail());
         if (loggedUser != null && isPasswordValid(user.getUserPassword(), loggedUser.getUserPassword())) {
-            HttpSession session = request.getSession(true);
-            session.setAttribute("loggedInUser", loggedUser);
             return loggedUser;
         } else {
             return null;
@@ -97,15 +89,12 @@ public class UserService {
         return null;
     }
 
-    public User updateUserAddress(String newAddress, HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            User loggedUser = (User) session.getAttribute("loggedInUser");
-            if (loggedUser != null) {
-                loggedUser.setUserAddress(newAddress);
-                System.out.println("Updated location for user: " + loggedUser.getUserName());
-                return userRepository.save(loggedUser);
-            }
+    public User updateUserAddress(Long userId, String newAddress) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setUserAddress(newAddress);
+            return userRepository.save(user);
         }
         return null;
     }

@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
 
-@CrossOrigin(originPatterns = "http://localhost:3000")
+
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -34,15 +33,15 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody User user,HttpServletRequest request){
-        User createUser = userService.addUser(user,request);
+    public ResponseEntity<User> addUser(@RequestBody User user){
+        User createUser = userService.addUser(user);
         return new ResponseEntity<>(createUser, HttpStatus.CREATED);
     }
 
     //로그인
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody User user, HttpServletRequest request) {
-        User loggedUser = userService.login(user, request);
+    public ResponseEntity<User> login(@RequestBody User user) {
+        User loggedUser = userService.login(user);
         if (loggedUser != null) {
             return new ResponseEntity<>(loggedUser, HttpStatus.OK);
         } else {
@@ -76,9 +75,9 @@ public class UserController {
     }
 
     //주소 업데이트
-    @PatchMapping("/location")
-    public ResponseEntity<User> updatedUserAddress(@RequestBody String newAddress,HttpServletRequest request) {
-        User updateUser = userService.updateUserAddress(newAddress,request);
+    @PatchMapping("/{userId}/location")
+    public ResponseEntity<User> updatedUserAddress(@PathVariable("userId") Long userId, @RequestBody String newAddress){
+        User updateUser = userService.updateUserAddress(userId, newAddress);
         return ResponseEntity.ok(updateUser);
     }
 
