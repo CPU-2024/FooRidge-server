@@ -1,6 +1,7 @@
 package CPU.FooRidge.controller;
 
 import CPU.FooRidge.domain.User;
+import CPU.FooRidge.dto.AddUserRequest;
 import CPU.FooRidge.repository.UserRepository;
 import CPU.FooRidge.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,10 +33,12 @@ public class UserController {
         return userService.findAllUser();
     }
 
-    @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody User user){
-        User createUser = userService.addUser(user);
-        return new ResponseEntity<>(createUser, HttpStatus.CREATED);
+    @PostMapping("/signup")
+    public ResponseEntity<User> addUser(@RequestBody AddUserRequest dto){
+        User createUser = userService.addUser(dto);
+        return (createUser!=null)?
+                ResponseEntity.status(HttpStatus.CREATED).body(createUser):
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     //로그인
@@ -55,31 +58,31 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     //유저 업데이트
-    @PutMapping("/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable("userId") Long userId,@RequestBody User updateUser){
-        userService.updateUser(userId,updateUser);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @PutMapping("/{userId}")
+//    public ResponseEntity<User> updateUser(@PathVariable("userId") Long userId,@RequestBody User updateUser){
+//        userService.updateUser(userId,updateUser);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
     //프로필사진 업데이트
-    @PatchMapping("/{userId}/profile")
-    public ResponseEntity<String> uploadProfile(@PathVariable("userId") Long userId,
-                                                @RequestPart("file") MultipartFile file) {
-        try {
-            userService.uploadProFile(userId, file);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    @PatchMapping("/{userId}/profile")
+//    public ResponseEntity<String> uploadProfile(@PathVariable("userId") Long userId,
+//                                                @RequestPart("file") MultipartFile file) {
+//        try {
+//            userService.uploadProFile(userId, file);
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
-    //주소 업데이트
-    @PatchMapping("/{userId}/location")
-    public ResponseEntity<User> updatedUserAddress(@PathVariable("userId") Long userId, @RequestBody String newAddress){
-        User updateUser = userService.updateUserAddress(userId, newAddress);
-        return ResponseEntity.ok(updateUser);
-    }
+//    //주소 업데이트
+//    @PatchMapping("/{userId}/location")
+//    public ResponseEntity<User> updatedUserAddress(@PathVariable("userId") Long userId, @RequestBody String newAddress){
+//        User updateUser = userService.updateUserAddress(userId, newAddress);
+//        return ResponseEntity.ok(updateUser);
+//    }
 
 
 }
