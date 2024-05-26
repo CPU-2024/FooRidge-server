@@ -3,6 +3,7 @@ package CPU.FooRidge.controller;
 import CPU.FooRidge.domain.User;
 import CPU.FooRidge.dto.user.AddUserRequest;
 import CPU.FooRidge.dto.user.LoginUserRequest;
+import CPU.FooRidge.dto.user.UpdateUserRequest;
 import CPU.FooRidge.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,12 +75,12 @@ public class UserController {
 //        }
 //    }
 
-//    //주소 업데이트
-//    @PatchMapping("/{userId}/location")
-//    public ResponseEntity<User> updatedUserAddress(@PathVariable("userId") Long userId, @RequestBody String newAddress){
-//        User updateUser = userService.updateUserAddress(userId, newAddress);
-//        return ResponseEntity.ok(updateUser);
-//    }
+    //주소 업데이트
+    @PatchMapping("/{userId}/location")
+    public ResponseEntity<User> updatedUserAddress(@PathVariable("userId") Long userId,@RequestBody UpdateUserRequest dto){
+        User updateUser = userService.updateUserAddress(userId,dto);
+        return ResponseEntity.ok(updateUser);
+    }
 
 
 }

@@ -10,7 +10,7 @@ public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
-    private int userId;
+    private Long userId;
 
     @Column
     private String userName;
@@ -41,5 +41,9 @@ public class User {
         this.userAddress = userAddress;
         this.userFileName=userFileName;
         this.userFilePath=userFilePath;
+    }
+
+    public void update(String userAddress) {
+        this.userAddress = userAddress;
     }
 }

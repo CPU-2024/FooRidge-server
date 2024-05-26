@@ -3,6 +3,7 @@ package CPU.FooRidge.service;
 import CPU.FooRidge.domain.User;
 import CPU.FooRidge.dto.user.AddUserRequest;
 import CPU.FooRidge.dto.user.LoginUserRequest;
+import CPU.FooRidge.dto.user.UpdateUserRequest;
 import CPU.FooRidge.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,14 +79,11 @@ public class UserService {
 //        }
 //        return null;
 //    }
-//
-//    public User updateUserAddress(Long userId, String newAddress) {
-//        Optional<User> userOptional = userRepository.findById(userId);
-//        if (userOptional.isPresent()) {
-//            User user = userOptional.get();
-//            user.setUserAddress(newAddress);
-//            return userRepository.save(user);
-//        }
-//        return null;
-//    }
+
+    @Transactional
+    public User updateUserAddress(Long userId,UpdateUserRequest dto) {
+        User user=userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("Not found user:"+userId));
+        user.update(dto.getUserAddress());
+        return userRepository.save(user);
+    }
 }
