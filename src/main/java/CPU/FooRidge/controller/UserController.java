@@ -1,18 +1,14 @@
 package CPU.FooRidge.controller;
 
 import CPU.FooRidge.domain.User;
-import CPU.FooRidge.dto.AddUserRequest;
-import CPU.FooRidge.dto.LoginUserRequest;
-import CPU.FooRidge.repository.UserRepository;
+import CPU.FooRidge.dto.user.AddUserRequest;
+import CPU.FooRidge.dto.user.LoginUserRequest;
 import CPU.FooRidge.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
