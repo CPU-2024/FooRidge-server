@@ -2,6 +2,7 @@ package CPU.FooRidge.service;
 
 import CPU.FooRidge.domain.User;
 import CPU.FooRidge.dto.AddUserRequest;
+import CPU.FooRidge.dto.LoginUserRequest;
 import CPU.FooRidge.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -62,13 +63,11 @@ public class UserService {
 //            }
 //    }
 
-    public User login(User user) {
-        User loggedUser = userRepository.findByUserEmail(user.getUserEmail());
-        if (loggedUser != null && isPasswordValid(user.getUserPassword(), loggedUser.getUserPassword())) {
+    public User login(LoginUserRequest dto) {
+        User loggedUser = userRepository.findByUserEmail(dto.getUserEmail());
+        if (loggedUser != null && isPasswordValid(dto.getUserPassword(), loggedUser.getUserPassword()))
             return loggedUser;
-        } else {
-            return null;
-        }
+       return null;
     }
     private boolean isPasswordValid(String inputPassword,String storedPassword){
         return inputPassword.equals(storedPassword);

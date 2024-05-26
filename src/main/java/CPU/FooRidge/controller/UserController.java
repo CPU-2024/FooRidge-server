@@ -2,6 +2,7 @@ package CPU.FooRidge.controller;
 
 import CPU.FooRidge.domain.User;
 import CPU.FooRidge.dto.AddUserRequest;
+import CPU.FooRidge.dto.LoginUserRequest;
 import CPU.FooRidge.repository.UserRepository;
 import CPU.FooRidge.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,8 +44,8 @@ public class UserController {
 
     //로그인
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody User user) {
-        User loggedUser = userService.login(user);
+    public ResponseEntity<User> login(@RequestBody LoginUserRequest dto) {
+        User loggedUser = userService.login(dto);
         if (loggedUser != null) {
             return new ResponseEntity<>(loggedUser, HttpStatus.OK);
         } else {
