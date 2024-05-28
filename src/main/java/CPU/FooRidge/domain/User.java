@@ -46,4 +46,8 @@ public class User {
     public void update(String userAddress) {
         this.userAddress = userAddress;
     }
+    public void updateUserFile(String userFileName, String userFilePath) {
+        this.userFileName = userFileName;
+        this.userFilePath = userFilePath;
+    }
 }
