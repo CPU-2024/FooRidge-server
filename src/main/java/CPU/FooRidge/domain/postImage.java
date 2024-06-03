@@ -10,8 +10,9 @@ public class postImage{
     @Column(name="id")
     private int postImageId;
 
-    @JoinColumn(name = "post", referencedColumnName = "id",nullable = false)
-    private int postId;
+    @OneToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 
     @Column(nullable = false)
     private String postImage;
@@ -19,8 +20,8 @@ public class postImage{
     public postImage(){
 
     }
-    public postImage(int postId,String postImage){
-        this.postId=postId;
+    public postImage(Post post,String postImage){
+        this.post=post;
         this.postImage=postImage;
     }
 
@@ -31,12 +32,12 @@ public class postImage{
     public void setPostImageId(int postImageId) {
         this.postImageId = postImageId;
     }
-    public int getPostId() {
-        return postId;
+    public Post getPost() {
+        return post;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     public String getPostImage() {

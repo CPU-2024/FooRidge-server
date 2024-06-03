@@ -2,7 +2,11 @@ package CPU.FooRidge.service;
 
 import CPU.FooRidge.domain.Post;
 import CPU.FooRidge.domain.User;
+import CPU.FooRidge.dto.post.AddPostRequest;
+import CPU.FooRidge.dto.post.UpdatePostRequest;
 import CPU.FooRidge.repository.PostRepository;
+import CPU.FooRidge.repository.UserRepository;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,13 +20,15 @@ import java.util.UUID;
 @Service
 public class PostService {
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
-    public void addPost(Post post, List<MultipartFile> files) throws IOException {
+    public Post addPost(AddPostRequest dto, List<MultipartFile> files) throws IOException {
         try {
             String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
 
@@ -38,12 +44,12 @@ public class PostService {
 
                 file.transferTo(saveFile);
                 fileNames.add(fileName);
-
             }
 
-            post.setFileNames(fileNames);
+            Post post = new Post(dto.getUser(), dto.getCategory(), dto.getPostTitle(),
+                    dto.getTradeMethod(), dto.getPrice(),fileNames, dto.getPostContent());
 
-            postRepository.save(post);
+            return postRepository.save(dto.toEntity());
         } catch (IOException e) {
             e.printStackTrace();
             throw e;
@@ -54,27 +60,25 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public List<Post> getPostsByUserId(Long userId){
-        return postRepository.findByUserId(userId);
+    public List<Post> getPostsByUserId(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found:" + userId));
+        return postRepository.findByUser(user);
     }
 
     public void deletePost(Long postId){
        postRepository.deleteById(postId);
     }
 
-    public Post updatePost(Long postId,Post updatedPost){
+    public Post updatePost(Long postId, UpdatePostRequest dto){
         Optional<Post> postOptional=postRepository.findById(postId);
         if(postOptional.isPresent()){
             Post post=postOptional.get();
-//            post.setUserId(updatedPost.getUserId());
-//            post.setCategoryId(updatedPost.getCategoryId());
-            post.setTradeMethod(updatedPost.getTradeMethod());
-            post.setPostTitle(updatedPost.getPostTitle());
-            post.setPrice(updatedPost.getPrice());
-            post.setPostContent(updatedPost.getPostContent());
+            post.update(dto.getTradeMethod(),dto.getPrice(),dto.getPostTitle(),dto.getPostContent());
             return postRepository.save(post);
+        }else{
+            throw new ResourceNotFoundException("Post not found:"+postId);
         }
-        return null;
     }
 
     public List<Post> search(String keyword){
