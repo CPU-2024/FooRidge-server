@@ -43,8 +43,14 @@ public class User {
         this.userFilePath=userFilePath;
     }
 
-    public void update(String userAddress) {
+    public void updateAddress(String userAddress) {
         this.userAddress = userAddress;
+    }
+
+    public void update(String userName,String userEmail,String userAddress){
+        this.userName=userName;
+        this.userEmail=userEmail;
+        this.userAddress=userAddress;
     }
     public void updateUserFile(String userFileName, String userFilePath) {
         this.userFileName = userFileName;

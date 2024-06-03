@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -71,21 +70,19 @@ public class UserService {
          userRepository.deleteById(userId);
     }
 
-//    public User updateUser(Long userId,User updatedUser){
-//        Optional<User> userOptional = userRepository.findById(userId);
-//        if (userOptional.isPresent()) {
-//            User user = userOptional.get();
-//            user.setUserName(updatedUser.getUserName());
-//            user.setUserPassword(updatedUser.getUserPassword());
-//            return userRepository.save(user);
-//        }
-//        return null;
-//    }
+    public User updateUser(Long userId,UpdateUserRequest dto){
+        User user=userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("Not found user:"+userId));
+        if(user==null) return null;
+        user.update(dto.getUserName(),
+                    dto.getUserEmail(),
+                    dto.getUserAddress());
+        return userRepository.save(user);
+    }
 
     @Transactional
     public User updateUserAddress(Long userId,UpdateUserRequest dto) {
         User user=userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("Not found user:"+userId));
-        user.update(dto.getUserAddress());
+        user.updateAddress(dto.getUserAddress());
         return userRepository.save(user);
     }
 }

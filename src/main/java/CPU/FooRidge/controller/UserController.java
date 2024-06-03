@@ -6,6 +6,7 @@ import CPU.FooRidge.dto.user.LoginUserRequest;
 import CPU.FooRidge.dto.user.UpdateUserRequest;
 import CPU.FooRidge.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,11 +58,11 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     //유저 업데이트
-//    @PutMapping("/{userId}")
-//    public ResponseEntity<User> updateUser(@PathVariable("userId") Long userId,@RequestBody User updateUser){
-//        userService.updateUser(userId,updateUser);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @PutMapping("/{userId}")
+    public ResponseEntity<User> updateUser(@PathVariable("userId") Long userId, UpdateUserRequest dto){
+        userService.updateUser(userId,dto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     //프로필사진 업데이트
     @PatchMapping("/{userId}/profile")

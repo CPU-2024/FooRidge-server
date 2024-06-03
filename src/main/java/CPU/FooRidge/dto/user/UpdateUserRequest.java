@@ -10,12 +10,22 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UpdateUserRequest { ;
+public class UpdateUserRequest {
+    private String userName;
+    private String userEmail;
+    private String userPassword;
     private String userAddress;
+    private String userFileName;
+    private String userFilePath;
 
     public User toEntity(){
         return User.builder()
+                .userName(userName)
+                .userEmail(userEmail)
+                .userPassword(userPassword)
                 .userAddress(userAddress)
+                .userFileName(userFileName)
+                .userFilePath(userFilePath)
                 .build();
     }
 }
