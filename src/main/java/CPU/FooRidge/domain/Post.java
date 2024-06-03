@@ -1,10 +1,13 @@
 package CPU.FooRidge.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.util.List;
 
 @Entity
+@Getter
 @Table(name="posts")
 public class Post {
     @Id
@@ -12,11 +15,13 @@ public class Post {
     @Column(name="Id")
     private int postId;
 
-    @Column(name = "user_id",nullable = false)
-    private int userId;
+    @OneToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
-    @Column(name = "category_id", nullable = false)
-    private int categoryId;
+    @OneToOne
+    @JoinColumn(name="category_id")
+    private Category category;
 
     @Column(nullable = false)
     private String postTitle;
@@ -25,7 +30,7 @@ public class Post {
     private String tradeMethod;
 
     @Column
-    private int price;
+    private Long price;
 
     @ElementCollection
     @CollectionTable(name = "post_files", joinColumns = @JoinColumn(name = "post_id"))
@@ -38,78 +43,24 @@ public class Post {
     public Post(){
 
     }
-    public Post(int userId,int categoryId,String tradeMethod,String postTitle,int price,List<String> fileNames,String postContent){
-        this.userId=userId;
-        this.categoryId=categoryId;
+
+    @Builder
+    public Post(User user,Category category,String tradeMethod,String postTitle,Long price,List<String> fileNames,String postContent){
+        this.user=user;
+        this.category=category;
         this.tradeMethod=tradeMethod;
-        this.postTitle=postTitle;
         this.price=price;
+        this.postTitle=postTitle;
         this.fileNames=fileNames;
         this.postContent=postContent;
     }
 
-    public int getPostId() {
-        return postId;
-    }
-
-    public void setPostId(int postId) {
-        this.postId = postId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void update(String tradeMethod, Long price, String postTitle, String postContent) {
+        this.tradeMethod=tradeMethod;
+        this.price=price;
+        this.postTitle=postTitle;
+        this.postContent=postContent;
     }
 
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public List<String> getFileNames() {
-        return fileNames;
-    }
-
-    public void setFileNames(List<String> fileNames) {
-        this.fileNames = fileNames;
-    }
-
-    public String getTradeMethod() {
-        return tradeMethod;
-    }
-
-    public void setTradeMethod(String tradeMethod) {
-        this.tradeMethod = tradeMethod;
-    }
-
-    public String getPostTitle() {
-        return postTitle;
-    }
-
-    public void setPostTitle(String postTitle) {
-        this.postTitle = postTitle;
-    }
-
-    public String getPostContent() {
-        return postContent;
-    }
-
-    public void setPostContent(String postContent) {
-            this.postContent = postContent;
-    }
 }
