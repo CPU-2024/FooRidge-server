@@ -1,9 +1,11 @@
 package CPU.FooRidge.controller;
 
 import CPU.FooRidge.domain.Post;
-import CPU.FooRidge.domain.User;
+import CPU.FooRidge.dto.post.AddPostRequest;
+import CPU.FooRidge.dto.post.UpdatePostRequest;
 import CPU.FooRidge.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,33 +28,30 @@ public class PostController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<Post> getPostsByUserId(@PathVariable("userId") Long userId){
-        return postService.getPostsByUserId(userId);
+    public ResponseEntity<List<Post>> getPostsByUserId(@PathVariable("userId") Long userId){
+        List<Post> posts=postService.getPostsByUserId(userId);
+        return (posts!=null)?
+                ResponseEntity.status(HttpStatus.OK).body((posts)):
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @GetMapping("/search")
-    public List<Post> search(@RequestParam("keyword") String keyword){
+    public ResponseEntity<List<Post>> search(@RequestParam("keyword") String keyword){
         List<Post> searchList=postService.search(keyword);
-        return searchList;
+        return ResponseEntity.status(HttpStatus.OK).body((searchList));
     }
 
     @PostMapping
-    public ResponseEntity<String>  addPost(@RequestParam("postTitle") String postTitle,
-                                           @RequestParam("tradeMethod") String tradeMethod,
-                                           @RequestParam("price") int price,
-                                           @RequestParam("postContent") String postContent,
+    public ResponseEntity<Post>  addPost(AddPostRequest dto,
                                            @RequestParam("file") List<MultipartFile> files){
         try{
-            Post post=new Post();
-            post.setPostTitle(postTitle);
-            post.setTradeMethod(tradeMethod);
-            post.setPrice(price);
-            post.setPostContent(postContent);
-            postService.addPost(post,files);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+           Post post=postService.addPost(dto, files);
+            return ResponseEntity.ok(post);
         } catch (IOException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+
     }
 
 
@@ -63,8 +62,8 @@ public class PostController {
     }
 
     @PutMapping("/{postId}")
-    public ResponseEntity<Post> updatePost(@PathVariable("postId") Long postId,@RequestBody Post updatedpost){
-        postService.updatePost(postId,updatedpost);
+    public ResponseEntity<Post> updatePost(@PathVariable("postId") Long postId, UpdatePostRequest dto){
+        postService.updatePost(postId,dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
