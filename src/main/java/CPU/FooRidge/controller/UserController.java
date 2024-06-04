@@ -27,12 +27,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    //read
+    //사용자 전체 조회
     @GetMapping
     public List<User> getAllUsers(){
         return userService.findAllUser();
     }
 
+    //회원가입
     @PostMapping("/signup")
     public ResponseEntity<User> addUser(@RequestBody AddUserRequest dto){
         User createUser = userService.addUser(dto);
