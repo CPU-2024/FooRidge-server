@@ -1,5 +1,5 @@
 ### 푸릿지 | Fooridge
-> 2024 ITSHOW 출품작 푸릿지 프로잭트 Spring boot 레포지토리
+> CPU 동아리 프로젝트 푸릿지 Spring boot 레포지토리
 <br>
 
 ### 프로젝트 기획 의도
